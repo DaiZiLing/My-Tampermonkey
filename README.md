@@ -12,7 +12,7 @@ Some Tampermonkey scripts I writed during my dairy work, still a beginer of JS.
 
 ![image](https://github.com/DaiZiLing/My-Tampermonkey/blob/main/Showcase/show_2.jpg)
 
-## 4、移除了 “我的礼券” “我的余额”，以及左下角一些复杂冗余的工商信息、服务热线、举报专区、分享按钮等
+## 4、移除了 “我的礼券” “我的余额”，以及右下角一些复杂冗余的工商信息、服务热线、举报专区、分享按钮等
 
 ## 5、在 4 的基础上优化了回答页面的布局，使回答尽量填充屏幕，并居中显示。移除了 “相关问题”、“关于作者”
 
