@@ -6,7 +6,7 @@ Some Tampermonkey scripts I writed during my dairy work, still a beginer of JS.
 
 ## 2、移除了 “学习” “会员” “发现” 的入口，仅保留 “首页” 与 “等你来答”
 
-![image](https://github.com/DaiZiLing/My-Tampermonkey/Showcase/show_1.jpg)
+![image](../Showcase/show_1.jpg)
 
 ## 3、移除了 “Live” “书店” “圆桌” “付费咨询” “百科”，仅保留 “专栏”，并让 “专栏” 居中
 
