@@ -6,11 +6,11 @@ Some Tampermonkey scripts I writed during my dairy work, still a beginer of JS.
 
 ## 2、移除了 “学习” “会员” “发现” 的入口，仅保留 “首页” 与 “等你来答”
 
-![image](https://github.com/DaiZiLing/My-Tampermonkey/blob/main/Showcase/show_1.jpg
+![image](https://github.com/DaiZiLing/My-Tampermonkey/blob/main/Showcase/show_1.jpg)
 
 ## 3、移除了 “Live” “书店” “圆桌” “付费咨询” “百科”，仅保留 “专栏”，并让 “专栏” 居中
 
-![image](https://github.com/DaiZiLing/My-Tampermonkey/blob/main/Showcase/show_2.jpg
+![image](https://github.com/DaiZiLing/My-Tampermonkey/blob/main/Showcase/show_2.jpg)
 
 ## 4、移除了 “我的礼券” “我的余额”，以及左下角一些复杂冗余的工商信息、服务热线、举报专区、分享按钮等
 
@@ -54,3 +54,4 @@ Some Tampermonkey scripts I writed during my dairy work, still a beginer of JS.
 # 虚幻引擎文档
 
 ## 1、更改右侧滑动块的颜色， 这玩意儿经常看不见。（TODO）
+![image](https://github.com/DaiZiLing/My-Tampermonkey/blob/main/Showcase/show_13.jpg)
