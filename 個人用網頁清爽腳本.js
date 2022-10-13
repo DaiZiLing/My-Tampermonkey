@@ -9,10 +9,13 @@
 // @match        https://t.bilibili.com/*
 // @match        https://twitter.com/*
 // @match        https://tieba.baidu.com/index.html
+// @match        https://tieba.baidu.com/f*
+// @match        https://tieba.baidu.com/p/*
 // @match        http://123.baidu.com/*
 // @match        https://www.baidu.com/*
 // @match        https://www.artstation.com/*
 // @match        https://docs.unrealengine.com/*
+// @match        https://user.qzone.qq.com/750143451/*
 // @author       DaiZiLing
 // @icon         https://www.google.com/s2/favicons?domain=bilibili.com
 // @grant        GM_addStyle
@@ -24,6 +27,29 @@
 // 本腳本不包含任何 抓取、收集用戶、監聽、獲取 cookie 、攔截、商業、傳輸、破解、購物、惡意外部依賴 等行為
 
 /* globals jQuery, $, waitForKeyElements */
+
+$(function() {
+    'use strict';
+    var Ibara;
+    var Ibaras = document.getElementsByTagName('div');
+    var Jun;
+    var Juns;
+
+    Ibara = Ibaras[1];
+    Juns = Ibara.getElementsByTagName('div');
+    Jun = Juns[23];
+    GM_addStyle(`.css-7i6y6c {background-color: #4EAED9;}`);
+    //console.log(Hiyori);
+
+    Jun.parentNode.removeChild(Jun);
+});
+
+function HimePicture()
+{
+    document.body.style = "background:rgba(0,0,0,0) url(https://raw.githubusercontent.com/DaiZiLing/My-Tampermonkey/main/Showcase/24d2054f021b85ad_1080.jpg) no-repeat fixed;background-size:100% auto";
+}
+
+//HimePicture();
 
 let weburl = unsafeWindow.location.href
 
@@ -84,25 +110,41 @@ if (weburl.indexOf('zhihu.com/question') != -1) // 知乎回答頁面，加寬�
     GM_addStyle(`.Card.AnswerAuthor {display:none !important;}`); // 關於作者
     GM_addStyle(`.Card.css-oyqdpg {display:none !important;}`); // 相關問題
 
-    // document.body.innerHTML = document.body.innerHTML.replace
-    // ('zh-lightbox-thumb lazy" width="1080"','zh-lightbox-thumb lazy" height="1080"');  
+    GM_addStyle(`.Card.AdvancedViewer {display:none !important;}`);
+    GM_addStyle(`.Card-header.BrandQuestionAuthor-header {display:none !important;}`);
+    GM_addStyle(`.Card-section.BrandQuestionAuthor.is-clickable {display:none !important;}`);
+    GM_addStyle(`.MemberButtonGroup.BrandQuestionAuthor-buttons {display:none !important;}`);
+
+    GM_addStyle(`.Button.FollowButton.css-upmq18.Button--secondary.Button--blue {display:none !important;}`);
+    GM_addStyle(`.Card.css-1r2f04i {display:none !important;}`);
 
     // document.body.innerHTML = document.body.innerHTML.replace
-    // ('zh-lightbox-thumb lazy" width="1079"','zh-lightbox-thumb lazy" height="1079"');  
+    // ('zh-lightbox-thumb lazy" width="1080"','zh-lightbox-thumb lazy" height="1080"');
+
+    // document.body.innerHTML = document.body.innerHTML.replace
+    // ('zh-lightbox-thumb lazy" width="1079"','zh-lightbox-thumb lazy" height="1079"');
     // 由于移动端的截图普遍高度在2000px以上，在电脑端看起来，即使是略缩图也无比地大。这里优化了手机截图略缩图在 PC 端的观看效果
     // 故针对于常见手机分辨率的窄边作出优化（比如1080），点开仍然是原图。
     // 这玩意儿对性能影响极大，TODO 了
 
+    //document.body.innerHTML = document.body.innerHTML.replace('data-size:normal', 'data-size:small'); // 替换所有大图为小图
+
 }
 
-if (weburl.indexOf('zhihu.com/follow') != -1) //知乎follow 
+if (weburl.indexOf('zhihu.com/follow') != -1) //知乎follow
 {
     GM_addStyle(`.Pc-feedAd-container {display:none !important;}`); //推送廣告，家具移民大專考消防證之類的
 }
 
-if (weburl.indexOf('zhihu.com') != -1) // 知乎主界面
+if (weburl.indexOf('www.zhihu.com') != -1) // 知乎主界面
 {
+
     GM_addStyle(`.Pc-card {display:none !important;}`); // PC 端的卡片廣告
+    GM_addStyle(`.Card.css-173vipd {display:none !important;}`); // 推荐关注
+    GM_addStyle(`.Pc-Business-Card-PcTopFeedBanner {display:none !important;}`); // 头条广告
+
+    GM_addStyle(`.Carousel-scroller {transform:translate3d(0px, -0%, 0px) !important;}`);
+    GM_addStyle(`.css-bxxjpd {display:none !important;}`); // 数据分析附近的滚动广告，并关闭滚动
 
     $("li:contains('学习')").remove();
     $("li:contains('会员')").remove();
@@ -119,6 +161,7 @@ if (weburl.indexOf('zhihu.com') != -1) // 知乎主界面
     GM_addStyle(`.GlobalSideBar-balanceItem {display:none !important;}`); // 我的餘額
     GM_addStyle(`.GlobalSideBar-couponItem {display:none !important;}`); // 我的禮券
     GM_addStyle(`.GlobalSideBar-copyrightItem {display:none !important;}`); // 版權服務中心
+    GM_addStyle(`.Business-Card-PcRightBanner-link {display:none !important;}`);
     // 下面的禮券之類的玩意兒
 
     GM_addStyle(`.Footer {display:none !important;}`); // 我的餘額
@@ -127,19 +170,61 @@ if (weburl.indexOf('zhihu.com') != -1) // 知乎主界面
     GM_addStyle(`.GlobalSideBar-categoryItem {margin-left: 90px !important;}`);
     // 專欄按鈕尺寸優化
 
-    var GlobalWrite = document.getElementsByClassName("GlobalWriteV2-navTop");
+    //var GlobalWrite = document.getElementsByClassName("GlobalWriteV2-navTop");
     /* for (let i = 1; i < GlobalWrite.length; i++) {} */
-    GlobalWrite[1].parentElement.removeChild(GlobalWrite[1]);
+    //GlobalWrite[1].parentElement.removeChild(GlobalWrite[1]);
+
     // 刪除發視頻投稿按鈕,TODO
 
-    /* document.body.innerHTML = document.body.innerHTML.replace('>视频',' style="display:none !important;">视频'); */
     // 視頻選項卡刪除
+    //const SakujouNijyuu = document.getElementsByClassName("Topstory");
+    //const SakujouNijyuuMokuHyou = SakujouNijyuu.getElementsByClassName("Topstory")[0];
+    //window.alert(SakujouNijyuuMokuHyou);
 
 }
 
 if (weburl.indexOf('twitter.com') != -1) // 推特
 {
     /* $( "div:contains('推荐'')" ).remove(); // TL的推薦廣告 */
+}
+
+if (weburl.indexOf('tieba.baidu.com/f') != -1) // 貼吧进吧之后
+{
+    GM_addStyle(`._73gawc6 {display:none !important;}`);
+    GM_addStyle(`.tbui_aside_float_bar {display:none !important;}`);
+    GM_addStyle(`.hover_btn {display:none !important;}`);
+    GM_addStyle(`.j_click_stats {display:none !important;}`);
+    GM_addStyle(`.close_btn.j_click_close {display:none !important;}`);
+    GM_addStyle(`.label_text {display:none !important;}`);
+    GM_addStyle(`.more-config-navtab.j_tbnav_tab  {display:none !important;}`);
+
+    GM_addStyle(`.card_banner.card_banner_link {display:none !important;}`);
+    GM_addStyle(`.icon_wrap.icon_wrap_theme1.frs_bright_icons  {display:none !important;}`);
+
+    GM_addStyle(`.aside_region.app_download_box {display:none !important;}`);
+    GM_addStyle(`.aside_region.celebrity {display:none !important;}`);
+    GM_addStyle(`#search_logo_large {display:none !important;}`);
+}
+
+if (weburl.indexOf('tieba.baidu.com/p/') != -1) // 貼吧看帖
+{
+    GM_addStyle(`._73gawc6 {display:none !important;}`);
+    GM_addStyle(`.tbui_aside_float_bar {display:none !important;}`);
+    GM_addStyle(`.hover_btn {display:none !important;}`);
+    GM_addStyle(`.j_click_stats {display:none !important;}`);
+    GM_addStyle(`.close_btn.j_click_close {display:none !important;}`);
+    GM_addStyle(`.label_text {display:none !important;}`);
+    GM_addStyle(`.more-config-navtab.j_tbnav_tab  {display:none !important;}`);
+
+    GM_addStyle(`.card_banner.card_banner_link {display:none !important;}`);
+    GM_addStyle(`.icon_wrap.icon_wrap_theme1.frs_bright_icons  {display:none !important;}`);
+
+    GM_addStyle(`.region_bright.app_download_box {display:none !important;}`);
+    GM_addStyle(`.region_bright.celebrity {display:none !important;}`);
+    GM_addStyle(`#search_logo_large {display:none !important;}`);
+    GM_addStyle(`.topic_list_box {display:none !important;}`);
+    GM_addStyle(`.see-image-btn.btn-default.btn-middle {display:none !important;}`);
+    GM_addStyle(`.fengchao-wrap-seat {display:none !important;}`);
 }
 
 if (weburl.indexOf('tieba.baidu.com/index') != -1) // 貼吧個人主頁
@@ -159,7 +244,7 @@ if (weburl.indexOf('tieba.baidu.com/index') != -1) // 貼吧個人主頁
     // GM_addStyle(`#likeforumwraper {width: 800px !important;}`);
     /* GM_addStyle (`.content-sec {width: 800px !important;}`); */
     /* GM_addStyle (`.bottom-bg {padding-bottom: 10px !important;}`); */
-    // 美化拓寬個人貼吧列表 
+    // 美化拓寬個人貼吧列表
 
     GM_addStyle(`.u_official {display:none !important;}`); // 官方號服務中心
     GM_addStyle(`.u_member {display:none !important;}`); // 會員
@@ -173,6 +258,8 @@ if (weburl.indexOf('tieba.baidu.com/index') != -1) // 貼吧個人主頁
     document.body.innerHTML = document.body.innerHTML.replace('>视频', ' style="display:none !important;">视频');
     document.body.innerHTML = document.body.innerHTML.replace('>资讯', ' style="display:none !important;">资讯');
     document.body.innerHTML = document.body.innerHTML.replace('>网页', ' style="display:none !important;">网页');
+
+    GM_addStyle(`.bottom-bg {display:none !important;}`); // 底下的条
 }
 
 if (weburl.indexOf('baidu.com') != -1) // 百度檢索
@@ -222,5 +309,15 @@ if (weburl.indexOf('docs.unrealengine.com') != -1) // 虚幻引擎官网教程
 {
     // document.body.innerHTML = document.body.innerHTML.replace
     // ('rgb(208, 208, 208)','rgb(160, 160, 160)');
+    // style="opacity: 0.5;"
     // 更改右侧滑动块的颜色， 这玩意儿经常看不见。
+}
+
+if (weburl.indexOf('user.qzone.qq.com') != -1) // QQ Zone
+{
+  GM_addStyle(`#weatherDiv {display:none !important;}`);
+  GM_addStyle(`.fn-checkin-btn {display:none !important;}`);
+  GM_addStyle(`.fn_accessLog_tips.bg2.bor2 {display:none !important;}`);
+  GM_addStyle(`.mod-side-nav.mod-side-nav-recently-used {display:none !important;}`);
+  GM_addStyle(`.head-detail-info.clearfix {display:none !important;}`);
 }
