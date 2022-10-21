@@ -15,7 +15,8 @@
 // @match        https://www.baidu.com/*
 // @match        https://www.artstation.com/*
 // @match        https://docs.unrealengine.com/*
-// @match        https://user.qzone.qq.com/750143451/*
+// @match        https://user.qzone.qq.com/*
+// @match        https://www.1point3acres.com/bbs/*
 // @author       DaiZiLing
 // @icon         https://www.google.com/s2/favicons?domain=bilibili.com
 // @grant        GM_addStyle
@@ -28,25 +29,116 @@
 
 /* globals jQuery, $, waitForKeyElements */
 
-$(function() {
+function BihuGeneralBlock()
+{
+    GM_addStyle(`.Pc-card {display:none !important;}`); // PC 端的卡片廣告
+    GM_addStyle(`.Card.css-173vipd {display:none !important;}`); // 推荐关注
+    GM_addStyle(`.Pc-Business-Card-PcTopFeedBanner {display:none !important;}`); // 头条广告
+
+    GM_addStyle(`.Carousel-scroller {transform:translate3d(0px, -0%, 0px) !important;}`);
+    GM_addStyle(`.css-bxxjpd {display:none !important;}`); // 数据分析附近的滚动广告，并关闭滚动
+
+    $("li:contains('学习')").remove();
+    $("li:contains('会员')").remove();
+    $("li:contains('发现')").remove();
+    // 最頂上的幾個按鈕
+
+    $("li:contains('Live')").remove();
+    $("li:contains('书店')").remove();
+    $("li:contains('圆桌')").remove();
+    $("li:contains('付费咨询')").remove();
+    $("li:contains('百科')").remove();
+    // 右邊雜七雜八用不到的圓桌啥的
+
+    GM_addStyle(`.GlobalSideBar-balanceItem {display:none !important;}`); // 我的餘額
+    GM_addStyle(`.GlobalSideBar-couponItem {display:none !important;}`); // 我的禮券
+    GM_addStyle(`.GlobalSideBar-copyrightItem {display:none !important;}`); // 版權服務中心
+    GM_addStyle(`.Business-Card-PcRightBanner-link {display:none !important;}`);
+    // 下面的禮券之類的玩意兒
+
+    GM_addStyle(`.Footer {display:none !important;}`); // 我的餘額
+    // 舉報專區、服務熱線等等，TODO
+
+    GM_addStyle(`.GlobalSideBar-categoryItem {margin-left: 90px !important;}`);
+    GM_addStyle(`.css-zkfaav {display:none !important;}`);
+    GM_addStyle(`.Tabs-link.AppHeader-TabsLink.css-11e2zdz {display:none !important;}`);
+    GM_addStyle(`.css-hnkyg1 {display:none !important;}`);
+    // 專欄按鈕尺寸優化
+
+    //var GlobalWrite = document.getElementsByClassName("GlobalWriteV2-navTop");
+    /* for (let i = 1; i < GlobalWrite.length; i++) {} */
+    //GlobalWrite[1].parentElement.removeChild(GlobalWrite[1]);
+
+    // 刪除發視頻投稿按鈕,TODO
+
+    // 視頻選項卡刪除
+    //const SakujouNijyuu = document.getElementsByClassName("Topstory");
+    //const SakujouNijyuuMokuHyou = SakujouNijyuu.getElementsByClassName("Topstory")[0];
+    //window.alert(SakujouNijyuuMokuHyou);
+}
+
+function BihuBannerBlock()
+{
     'use strict';
     var Ibara;
     var Ibaras = document.getElementsByTagName('div');
     var Jun;
     var Juns;
+    var JunD2;
 
     Ibara = Ibaras[1];
     Juns = Ibara.getElementsByTagName('div');
-    Jun = Juns[23];
+    Jun = Juns[25];
+    JunD2 = Juns[22];
+
     GM_addStyle(`.css-7i6y6c {background-color: #4EAED9;}`);
+    GM_addStyle(`.css-9cqq7d {display:none !important;}`);
     //console.log(Hiyori);
 
     Jun.parentNode.removeChild(Jun);
-});
+    JunD2.parentNode.removeChild(JunD2);
+}
+
+function BihuNijiuBlock()
+{
+    var Nijius;
+    Nijius = document.getElementsByClassName("HotList-list");
+
+    var Nijiu;
+    var Nijiu_2;
+    var Nijiu_2_1;
+    var Nijiu_2_2;
+    var Nijiu_2_3;
+    var Nijiu_2_4;
+    var Nijiu_2_5;
+
+    Nijiu = Nijius[0];
+    Nijiu_2 = Nijiu.getElementsByTagName('section');
+    Nijiu_2_1 = Nijiu_2[0];
+    Nijiu_2_2 = Nijiu_2[1];
+    Nijiu_2_3 = Nijiu_2[2];
+    Nijiu_2_4 = Nijiu_2[3];
+    Nijiu_2_5 = Nijiu_2[4];
+
+    var Namae = document.getElementsByClassName("HotItem-rank");
+
+    console.log(Namae);
+
+    for (var i = 5; i < 49; i++)
+    {
+    Namae[i].innerHTML = i - 4;
+    }
+
+    Nijiu_2_1.parentNode.removeChild(Nijiu_2_1);
+    Nijiu_2_2.parentNode.removeChild(Nijiu_2_2);
+    Nijiu_2_3.parentNode.removeChild(Nijiu_2_3);
+    Nijiu_2_4.parentNode.removeChild(Nijiu_2_4);
+    Nijiu_2_5.parentNode.removeChild(Nijiu_2_5);
+}
 
 function HimePicture()
 {
-    document.body.style = "background:rgba(0,0,0,0) url(https://raw.githubusercontent.com/DaiZiLing/My-Tampermonkey/main/Showcase/24d2054f021b85ad_1080.jpg) no-repeat fixed;background-size:100% auto";
+    document.body.style = "background:rgba(1,0,0,0) url(https://raw.githubusercontent.com/DaiZiLing/My-Tampermonkey/main/Showcase/24d2054f021b85ad_1080.jpg) no-repeat fixed;background-size:100% auto";
 }
 
 //HimePicture();
@@ -74,6 +166,21 @@ if (weburl.indexOf('bilibili.com/video') != -1) // 嗶哩嗶哩播放視頻界�
 
     /* GM_addStyle (`.v-popover-wrap {display:none !important;}`); // 會員購分區的進入按鈕 */
     /* visibility: hidden; */
+}
+
+if (weburl.indexOf('www.1point3acres.com') != -1) // 1p3a 论坛
+{
+    GM_addStyle(`#ad-page-header {display:none !important;}`);  // 上边的 banner
+    GM_addStyle(`.drag {display:none !important;}`);  // 右边一坨
+    GM_addStyle(`#sticky-ad-container {display:none !important;}`);  // 底下一坨
+    GM_addStyle(`._ap_apex_ad {display:none !important;}`);  // 最底下一坨
+    GM_addStyle(`.flex-1.overflow-hidden {display:none !important;}`);  // 一楼一坨
+
+    GM_addStyle(`.mtw.mbw {display:none !important;}`);  // 相关主题, 焦虑推送泥麻麻石蜡
+    GM_addStyle(`.attach_nopermission.attach_tips {display:none !important;}`);  // VX 登陆提示
+    GM_addStyle(`#fastpostform {display:none !important;}`);  // 快速发帖框框
+    GM_addStyle(`.container-1p3a.footer-1p3a.flex.justify-between.text-xs {display:none !important;}`);  // 工商信息
+    GM_addStyle(`.plc.plm {display:none !important;}`);  // 签名档
 }
 
 if (weburl.indexOf('space.bilibili.com') != -1) //嗶哩嗶哩個人界面
@@ -133,54 +240,16 @@ if (weburl.indexOf('zhihu.com/question') != -1) // 知乎回答頁面，加寬�
 
 if (weburl.indexOf('zhihu.com/follow') != -1) //知乎follow
 {
+    BihuGeneralBlock();
+    BihuBannerBlock();
     GM_addStyle(`.Pc-feedAd-container {display:none !important;}`); //推送廣告，家具移民大專考消防證之類的
 }
 
-if (weburl.indexOf('www.zhihu.com') != -1) // 知乎主界面
+if (weburl.indexOf('zhihu.com/hot') != -1) // 知乎主界面
 {
-
-    GM_addStyle(`.Pc-card {display:none !important;}`); // PC 端的卡片廣告
-    GM_addStyle(`.Card.css-173vipd {display:none !important;}`); // 推荐关注
-    GM_addStyle(`.Pc-Business-Card-PcTopFeedBanner {display:none !important;}`); // 头条广告
-
-    GM_addStyle(`.Carousel-scroller {transform:translate3d(0px, -0%, 0px) !important;}`);
-    GM_addStyle(`.css-bxxjpd {display:none !important;}`); // 数据分析附近的滚动广告，并关闭滚动
-
-    $("li:contains('学习')").remove();
-    $("li:contains('会员')").remove();
-    $("li:contains('发现')").remove();
-    // 最頂上的幾個按鈕
-
-    $("li:contains('Live')").remove();
-    $("li:contains('书店')").remove();
-    $("li:contains('圆桌')").remove();
-    $("li:contains('付费咨询')").remove();
-    $("li:contains('百科')").remove();
-    // 右邊雜七雜八用不到的圓桌啥的
-
-    GM_addStyle(`.GlobalSideBar-balanceItem {display:none !important;}`); // 我的餘額
-    GM_addStyle(`.GlobalSideBar-couponItem {display:none !important;}`); // 我的禮券
-    GM_addStyle(`.GlobalSideBar-copyrightItem {display:none !important;}`); // 版權服務中心
-    GM_addStyle(`.Business-Card-PcRightBanner-link {display:none !important;}`);
-    // 下面的禮券之類的玩意兒
-
-    GM_addStyle(`.Footer {display:none !important;}`); // 我的餘額
-    // 舉報專區、服務熱線等等，TODO
-
-    GM_addStyle(`.GlobalSideBar-categoryItem {margin-left: 90px !important;}`);
-    // 專欄按鈕尺寸優化
-
-    //var GlobalWrite = document.getElementsByClassName("GlobalWriteV2-navTop");
-    /* for (let i = 1; i < GlobalWrite.length; i++) {} */
-    //GlobalWrite[1].parentElement.removeChild(GlobalWrite[1]);
-
-    // 刪除發視頻投稿按鈕,TODO
-
-    // 視頻選項卡刪除
-    //const SakujouNijyuu = document.getElementsByClassName("Topstory");
-    //const SakujouNijyuuMokuHyou = SakujouNijyuu.getElementsByClassName("Topstory")[0];
-    //window.alert(SakujouNijyuuMokuHyou);
-
+    BihuGeneralBlock();
+    BihuBannerBlock();
+    BihuNijiuBlock();
 }
 
 if (weburl.indexOf('twitter.com') != -1) // 推特
