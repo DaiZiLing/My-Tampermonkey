@@ -91,7 +91,7 @@ function BihuBannerBlock()
     Jun = Juns[25];
     JunD2 = Juns[22];
 
-    GM_addStyle(`.css-7i6y6c {background-color: #4EAED9;}`);
+    GM_addStyle(`.css-1vfyjeh {background-color: #4EAED9;}`);
     GM_addStyle(`.css-9cqq7d {display:none !important;}`);
     //console.log(Hiyori);
 
@@ -138,7 +138,7 @@ function BihuNijiuBlock()
 
 function HimePicture()
 {
-    document.body.style = "background:rgba(1,0,0,0) url(http://ys-d.ysepan.com/616091624/218040983/n733676456NLGKjhdnKib0/24d2054f021b85ad_1080.jpg) no-repeat fixed;background-size:100% auto";
+    document.body.style = "background: url(http://ys-d.ysepan.com/616091624/218040983/n733676456NLGKjhdnKib0/24d2054f021b85ad_1080.jpg) no-repeat fixed;background-size:100% auto";
 }
 
 function ZhihuBeauty()
@@ -151,6 +151,13 @@ function ZhihuBeauty()
     GM_addStyle(`.Card.Topstory-noMarginCard.Topstory-tabCard {background-color:rgba(255 ,255, 255, 0.5)`);
 
     GM_addStyle(`.Zi.Zi--Creator.CreatorEntrance-creatorIcon {display:none !important;}`);
+}
+
+function ZhihuBlockAnonymous() // 删除指定用户的回答
+{
+    var AnonymousAnswers = $("[data-zop*='\"authorName\":\"匿名用户\"']");
+    AnonymousAnswers = AnonymousAnswers.parent().parent();
+    AnonymousAnswers.remove();
 }
 
 let weburl = unsafeWindow.location.href
@@ -215,6 +222,9 @@ if (weburl.indexOf('t.bilibili.com') != -1) //嗶哩嗶哩動態界面,TODO
 
 if (weburl.indexOf('zhihu.com/question') != -1) // 知乎回答頁面，加寬了 380 pixels
 {
+
+    HimePicture();
+
     GM_addStyle(`.QuestionHeader-title {width: 1074px margin-top: 30px; !important;}`); // 問題標題
     GM_addStyle(`.css-eew49z {width: 1030px !important;}`); // 問題描述
     GM_addStyle(`.Card.css-l8qto0 {width: 1074px !important;}`); // 最新進展
@@ -246,6 +256,8 @@ if (weburl.indexOf('zhihu.com/question') != -1) // 知乎回答頁面，加寬�
 
     //document.body.innerHTML = document.body.innerHTML.replace('data-size:normal', 'data-size:small'); // 替换所有大图为小图
 
+    setInterval(ZhihuBlockAnonymous,1000);
+
 }
 
 if (weburl.indexOf('zhihu.com/follow') != -1) //知乎follow
@@ -254,14 +266,15 @@ if (weburl.indexOf('zhihu.com/follow') != -1) //知乎follow
     BihuBannerBlock();
     GM_addStyle(`.Pc-feedAd-container {display:none !important;}`); //推送廣告，家具移民大專考消防證之類的
     HimePicture();
+    ZhihuBeauty();
 }
 
 if (weburl.indexOf('zhihu.com/hot') != -1) // 知乎主界面
 {
     BihuGeneralBlock();
     BihuBannerBlock();
-    BihuNijiuBlock();
-    HimePicture();
+    //BihuNijiuBlock();
+
     ZhihuBeauty();
 }
 
