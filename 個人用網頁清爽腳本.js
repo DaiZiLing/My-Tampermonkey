@@ -17,6 +17,7 @@
 // @match        https://docs.unrealengine.com/*
 // @match        https://user.qzone.qq.com/*
 // @match        https://www.1point3acres.com/bbs/*
+// @match        https://s.weibo.com/*
 // @author       DaiZiLing
 // @icon         https://www.google.com/s2/favicons?domain=bilibili.com
 // @grant        GM_addStyle
@@ -281,6 +282,7 @@ if (weburl.indexOf('zhihu.com/hot') != -1) // 知乎主界面
 if (weburl.indexOf('twitter.com') != -1) // 推特
 {
     /* $( "div:contains('推荐'')" ).remove(); // TL的推薦廣告 */
+    setInterval(TimelineRepeatBlock,500);
 }
 
 if (weburl.indexOf('tieba.baidu.com/f') != -1) // 貼吧进吧之后
@@ -415,4 +417,26 @@ if (weburl.indexOf('user.qzone.qq.com') != -1) // QQ Zone
   GM_addStyle(`.fn_accessLog_tips.bg2.bor2 {display:none !important;}`);
   GM_addStyle(`.mod-side-nav.mod-side-nav-recently-used {display:none !important;}`);
   GM_addStyle(`.head-detail-info.clearfix {display:none !important;}`);
+}
+
+if (weburl.indexOf('s.weibo.com/weibo') != -1) // QQ Zone
+{
+    // setInterval(TimelineRepeatBlock,500);
+}
+
+function TimelineRepeatBlock() // 屏蔽各类时间线上的洗版、重复内容
+{
+    var akachan = document.getElementsByClassName("content");
+    // getElementById = react-root;
+    for (var i = 0; i < akachan.length; i++)
+    {
+        var debugresurt = akachan[i].innerHTML.indexOf("外围"); //此处填写被洗版的内容
+        if (debugresurt != -1)
+        {
+            var chichioya = akachan[i].parentNode.parentNode.parentNode;
+
+            console.log(chichioya);
+            chichioya.remove();
+        }
+    }
 }
