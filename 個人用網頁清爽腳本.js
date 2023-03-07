@@ -17,7 +17,7 @@
 // @match        https://docs.unrealengine.com/*
 // @match        https://user.qzone.qq.com/*
 // @match        https://www.1point3acres.com/bbs/*
-// @match        https://s.weibo.com/*
+// @match        https://www.bbc.com/*
 // @author       DaiZiLing
 // @icon         https://www.google.com/s2/favicons?domain=bilibili.com
 // @grant        GM_addStyle
@@ -92,12 +92,19 @@ function BihuBannerBlock()
     Jun = Juns[25];
     JunD2 = Juns[22];
 
-    GM_addStyle(`.css-1vfyjeh {background-color: #4EAED9;}`);
+    GM_addStyle(`.css-1pxivs0 {background-color: #4EAED9;}`);
     GM_addStyle(`.css-9cqq7d {display:none !important;}`);
     //console.log(Hiyori);
 
     Jun.parentNode.removeChild(Jun);
     JunD2.parentNode.removeChild(JunD2);
+}
+
+function MemoryOffZhihu()
+{
+    var MemoryOff = document.getElementsByTagName('style');
+    console.log(MemoryOff[0]);
+    MemoryOff[0].remove();
 }
 
 function BihuNijiuBlock()
@@ -139,7 +146,7 @@ function BihuNijiuBlock()
 
 function HimePicture()
 {
-    document.body.style = "background: url(http://ys-d.ysepan.com/616091624/218040983/n733676456NLGKjhdnKib0/24d2054f021b85ad_1080.jpg) no-repeat fixed;background-size:100% auto";
+    document.body.style = "background: url(https://ys-d.ysepan.com/616091624/218040983/n733676456NLGKjhdnKib0/24d2054f021b85ad_1080.jpg) no-repeat fixed;background-size:100% auto !important;";
 }
 
 function ZhihuBeauty()
@@ -165,6 +172,9 @@ let weburl = unsafeWindow.location.href
 
 if (weburl.indexOf('bilibili.com/video') != -1) // 嗶哩嗶哩播放視頻界面
 {
+
+    // HimePicture();
+
     GM_addStyle(`.bpx-player-top-left-follow {display:none !important;}`); // 視頻左上角的關注引導
     GM_addStyle(`.ad-report {display:none !important;}`); // 彈幕列表下拉菜單中的 “建模接單廣告”
     GM_addStyle(`#activity_vote {display:none !important;}`); // 評論區上方的遊戲創作邊界活動
@@ -182,8 +192,26 @@ if (weburl.indexOf('bilibili.com/video') != -1) // 嗶哩嗶哩播放視頻界�
     GM_addStyle(`.bpx-player-reserve {display:none !important;}`);
     GM_addStyle(`.bilibili-player-reserve-wrap {display:none !important;}`); // 視頻預約彈窗
 
-    /* GM_addStyle (`.v-popover-wrap {display:none !important;}`); // 會員購分區的進入按鈕 */
+    GM_addStyle(`.bilibili-player-reserve-wrap {display:none !important;}`); // 視頻預約彈窗
+
+    GM_addStyle (`.recommend-list.report-wrap-module.report-scroll-module {display:none !important;}`); // 视频推荐列表
+    GM_addStyle (`.s_tag.report-wrap-module.report-scroll-module {display:none !important;}`); // 视频 tag
+
+    GM_addStyle (`.bili-avatar-pendent-dom {display:none !important;}`); // 头像框框
+    GM_addStyle (`.bili-avatar-icon.bili-avatar-right-icon.bili-avatar-size-48 {display:none !important;}`); // 头像右下 icon
+    GM_addStyle (`.nameplate {display:none !important;}`); // 名字后面的图标
+    GM_addStyle (`.medal {display:none !important;}`); // 名字后面的狗牌
+
+    GM_addStyle (`.video-sections-content-list {height:870px !important; max-height:870px !important;}`); // 视频列表
+    GM_addStyle (`.danmaku-box {display:none !important;}`); // 弹幕列表
     /* visibility: hidden; */
+}
+
+
+if (weburl.indexOf('bbc.com') != -1) // BBC NEWS
+{
+    GM_addStyle (`.nw-c-leaderboard-ad.gs-u-box-size.no-touch.b-pw-1280 {display:none !important;}`); // AD
+    GM_addStyle (`.dotcom-ad-inner {display:none !important;}`); // AD
 }
 
 if (weburl.indexOf('www.1point3acres.com') != -1) // 1p3a 论坛
@@ -261,28 +289,35 @@ if (weburl.indexOf('zhihu.com/question') != -1) // 知乎回答頁面，加寬�
 
 }
 
+if (weburl.indexOf('zhihu.com/search') != -1) // 知乎回答頁面，加寬了 380 pixels
+{
+    GM_addStyle(`.css-1oy4rvw {display:none !important;}`);
+    GM_addStyle(`.SearchMain {width: 1074px !important;}`); // 問題標題
+}
+
 if (weburl.indexOf('zhihu.com/follow') != -1) //知乎follow
 {
     BihuGeneralBlock();
-    BihuBannerBlock();
+    //BihuBannerBlock();
     GM_addStyle(`.Pc-feedAd-container {display:none !important;}`); //推送廣告，家具移民大專考消防證之類的
     HimePicture();
     ZhihuBeauty();
+    MemoryOffZhihu();
 }
 
 if (weburl.indexOf('zhihu.com/hot') != -1) // 知乎主界面
 {
     BihuGeneralBlock();
-    BihuBannerBlock();
+    //BihuBannerBlock();
     //BihuNijiuBlock();
 
     ZhihuBeauty();
+    MemoryOffZhihu();
 }
 
 if (weburl.indexOf('twitter.com') != -1) // 推特
 {
     /* $( "div:contains('推荐'')" ).remove(); // TL的推薦廣告 */
-    setInterval(TimelineRepeatBlock,500);
 }
 
 if (weburl.indexOf('tieba.baidu.com/f') != -1) // 貼吧进吧之后
@@ -366,6 +401,7 @@ if (weburl.indexOf('baidu.com') != -1) // 百度檢索
     GM_addStyle(`.FYB_RD {display:none !important;}`); // 百度熱搜
     GM_addStyle(`.ad-block.ad-block-0 {display:none !important;}`); // 商業推廣
     GM_addStyle(`.se_common_hint {display:none !important;}`); // 百度保障
+    GM_addStyle(`.main.clearfix.c-wrapper.c-wrapper-l  {display:none !important;}`); // 搜索栏底下那一坨
 
     document.body.innerHTML = document.body.innerHTML.replace('display:block !important;visibility:visible !important;',
         'display:none !important;');
@@ -417,26 +453,4 @@ if (weburl.indexOf('user.qzone.qq.com') != -1) // QQ Zone
   GM_addStyle(`.fn_accessLog_tips.bg2.bor2 {display:none !important;}`);
   GM_addStyle(`.mod-side-nav.mod-side-nav-recently-used {display:none !important;}`);
   GM_addStyle(`.head-detail-info.clearfix {display:none !important;}`);
-}
-
-if (weburl.indexOf('s.weibo.com/weibo') != -1) // QQ Zone
-{
-    // setInterval(TimelineRepeatBlock,500);
-}
-
-function TimelineRepeatBlock() // 屏蔽各类时间线上的洗版、重复内容
-{
-    var akachan = document.getElementsByClassName("content");
-    // getElementById = react-root;
-    for (var i = 0; i < akachan.length; i++)
-    {
-        var debugresurt = akachan[i].innerHTML.indexOf("外围"); //此处填写被洗版的内容
-        if (debugresurt != -1)
-        {
-            var chichioya = akachan[i].parentNode.parentNode.parentNode;
-
-            console.log(chichioya);
-            chichioya.remove();
-        }
-    }
 }
